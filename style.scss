@@ -1,0 +1,364 @@
+@use "sass:math";
+
+$border-radius: .25rem !default;
+$border-width: 1px !default;
+$spacer: 1.5rem !default;
+$body-bg: #1c1c1c !default;
+$brand-primary: #0275d8 !default;
+$component-active-color: #fff !default;
+$component-active-bg: $brand-primary !default;
+$font-size-base: 1rem !default;
+$font-size-lg: 1.25rem !default;
+$font-size-xl: 1.75rem !default;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+    xs: 0,
+    sm: 544px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px) !default;
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$container-max-widths: (
+    sm: 576px,
+    md: 720px,
+    lg: 940px,
+    xl: 1140px) !default;
+
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+$grid-columns: 12 !default;
+$grid-gutter-width: 30px !default;
+
+
+// Navbar
+$navbar-border-radius: $border-radius !default;
+$navbar-padding-x: $spacer !default;
+$navbar-padding-y: math.div($spacer, 2) !default;
+$navbar-brand-padding-y: .25rem !default;
+
+$navbar-dark-color: rgba(255, 255, 255, .5) !default;
+$navbar-dark-hover-color: rgba(255, 255, 255, .75) !default;
+$navbar-dark-active-color: rgba(255, 255, 255, 1) !default;
+$navbar-dark-disabled-color: rgba(255, 255, 255, .25) !default;
+
+$navbar-light-color: rgba(0, 0, 0, .3) !default;
+$navbar-light-hover-color: rgba(0, 0, 0, .6) !default;
+$navbar-light-active-color: rgba(0, 0, 0, .8) !default;
+$navbar-light-disabled-color: rgba(0, 0, 0, .15) !default;
+
+// Colors
+$gray-dark: #373a3c !default;
+$gray: #55595c !default;
+$gray-light: #818a91 !default;
+$gray-lighter: #eceeef !default;
+$gray-lightest: #f7f7f9 !default;
+
+$brand-primary: #0275d8 !default;
+$brand-success: #5cb85c !default;
+$brand-info: #5bc0de !default;
+$brand-warning: #f0ad4e !default;
+$brand-danger: #d9534f !default;
+
+
+// Navs
+$nav-item-margin: .2rem !default;
+$nav-item-inline-spacer: 1rem !default;
+$nav-link-padding: .5em 1em !default;
+$nav-link-hover-bg: $gray-lighter !default;
+$nav-disabled-link-color: $gray-light !default;
+$nav-disabled-link-hover-color: $gray-light !default;
+$nav-disabled-link-hover-bg: transparent !default;
+
+$nav-tabs-border-color: #ddd !default;
+$nav-tabs-border-width: $border-width !default;
+$nav-tabs-link-hover-border-color: $gray-lighter !default;
+$nav-tabs-active-link-hover-color: $gray !default;
+$nav-tabs-active-link-hover-bg: $body-bg !default;
+$nav-tabs-active-link-hover-border-color: #ddd !default;
+$nav-tabs-justified-link-border-color: #ddd !default;
+$nav-tabs-justified-active-link-border-color: $body-bg !default;
+
+$nav-pills-border-radius: $border-radius !default;
+$nav-pills-active-link-color: $component-active-color !default;
+$nav-pills-active-link-bg: $component-active-bg !default;
+
+@mixin clearfix() {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin hover-focus {
+
+    &:focus,
+    &:hover {
+        @content
+    }
+}
+
+@mixin plain-hover-focus {
+
+    &,
+    &:focus,
+    &:hover {
+        @content
+    }
+}
+
+@mixin make-container($gutter: $grid-gutter-width) {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: math.div($gutter, 2
+    );
+padding-right: math.div($gutter, 2);
+
+@include clearfix();
+}
+
+// Minimum breakpoint width. Null for the smallest (first) breakpoint.
+//
+//    >> breakpoint-min(sm, (xs: 0, sm: 544px, md: 768px))
+//    544px
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+    $min: map-get($breakpoints, $name);
+    @return if($min !=0, $min, null);
+}
+
+// Maximum breakpoint width. Null for the largest (last) breakpoint.
+// The maximum value is calculated as the minimum of the next one less 0.1.
+//
+//    >> breakpoint-max(sm, (xs: 0, sm: 544px, md: 768px))
+//    767px
+@function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
+    $next: breakpoint-next($name, $breakpoints);
+    @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
+}
+
+// Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
+// Makes the @content apply to the given breakpoint and wider.
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+    $min: breakpoint-min($name, $breakpoints);
+
+    @if $min {
+        @media (min-width: $min) {
+            @content;
+        }
+    }
+
+    @else {
+        @content;
+    }
+}
+
+// Media of at most the maximum breakpoint width. No query for the largest breakpoint.
+// Makes the @content apply to the given breakpoint and narrower.
+@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
+    $max: breakpoint-max($name, $breakpoints);
+
+    @if $max {
+        @media (max-width: $max) {
+            @content;
+        }
+    }
+
+    @else {
+        @content;
+    }
+}
+
+@mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+
+    @each $breakpoint,
+    $container-max-width in $max-widths {
+        @include media-breakpoint-up($breakpoint, $breakpoints) {
+            max-width: $container-max-width;
+        }
+    }
+}
+
+body {
+    background-color: $body-bg;
+    font-family: sans-serif;
+    color: #ffffff;
+    margin: 0;
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+a {
+    text-decoration: none;
+    color: #66f;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #669;
+}
+
+.content {
+    font-size: $font-size-lg;
+    font-weight: 300;
+    flex: 1;
+    line-height: 1.5;
+}
+
+.prominent {
+    align-items: center;
+    text-align: center;
+    font-size: $font-size-xl;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container {
+    @include make-container();
+    @include make-container-max-widths();
+}
+
+.nav {
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.navbar {
+    position: relative;
+    padding: $navbar-padding-y $navbar-padding-x;
+
+    @include clearfix();
+
+    @media (min-width: 544px) {
+        .navbar {
+            border-radius: 0.25rem;
+        }
+    }
+
+}
+
+.navbar-brand {
+    float: left;
+    padding-top: $navbar-brand-padding-y;
+    padding-bottom: $navbar-brand-padding-y;
+    margin-right: 1rem;
+    font-size: $font-size-lg;
+    font-weight: bold;
+}
+
+.navbar-nav {
+    .nav-item {
+        float: left;
+    }
+
+    .nav-link {
+        display: block;
+        padding-top: .425rem;
+        padding-bottom: .425rem;
+
+        +.nav-link {
+            margin-left: 1rem;
+        }
+    }
+
+    .nav-item+.nav-item {
+        margin-left: 1rem;
+    }
+}
+
+.navbar-dark {
+    background-color: rgba(255, 255, 255, .075);
+
+    .navbar-brand {
+        color: $navbar-dark-active-color;
+
+        @include hover-focus {
+            color: $navbar-dark-active-color;
+        }
+    }
+
+    .navbar-nav {
+        .nav-link {
+            color: $navbar-dark-color;
+
+            @include hover-focus {
+                color: $navbar-dark-hover-color;
+            }
+        }
+
+        .open>.nav-link,
+        .active>.nav-link,
+        .nav-link.open,
+        .nav-link.active {
+            @include plain-hover-focus {
+                color: $navbar-dark-active-color;
+            }
+        }
+    }
+
+    .navbar-divider {
+        background-color: rgba(255, 255, 255, .075);
+    }
+}
+
+.pull-xs-left {
+    float: left !important;
+}
+
+.pull-xs-right {
+    float: right !important;
+}
+
+@keyframes halogo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.halogo {
+    animation: halogo-spin infinite 20s linear;
+    height: 40vmin;
+    pointer-events: none;
+    user-select: none;
+}
+
+footer {
+    background-color: rgba(255, 255, 255, .075);
+    margin-top: 3rem;
+    padding: 1rem 0;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+
+    .logo-font {
+        vertical-align: middle;
+    }
+
+    .attribution {
+        vertical-align: middle;
+        margin-left: 10px;
+        font-size: 0.8rem;
+        color: #bbb;
+        font-weight: 300;
+    }
+}
