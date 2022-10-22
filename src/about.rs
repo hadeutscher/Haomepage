@@ -13,7 +13,9 @@ pub fn footer() -> Html {
                 <br />
                 { "I'm also interested in philosophy and religion, and study a little bit of Talmud."}
                 <br />
-                { "I drew my logo on my own, partially by hand-writing SVG. It's based on the Sharingan from the anime series Naruto." }
+                { "I drew my logo on my own, partially by " }
+                <a href="https://github.com/hadeutscher/Haomepage/blob/master/HaLogo.svg?short_path=898e08c"> { "hand-written SVG" } </a>
+                { ". It's based on the Sharingan from the anime series Naruto." }
             </p>
             <p>
                 { "You can find my code on " }
