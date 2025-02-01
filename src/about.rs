@@ -2,7 +2,7 @@ use yew::prelude::*;
 
 #[function_component(About)]
 pub fn footer() -> Html {
-    html! { 
+    html! {
         <div class={classes!("container", "content")}>
             <p class={classes!("f1")}> { "Hey there." } </p>
             <p class={classes!("f2")}> { "I'm Yuval, but most people call me Deutscher. " } </p>

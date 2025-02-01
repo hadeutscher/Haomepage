@@ -13,11 +13,13 @@ use header::Header;
 use home::Home;
 use routes::AppRoute;
 
-fn switch(routes: &AppRoute) -> Html {
+fn switch(routes: AppRoute) -> Html {
     match routes {
         AppRoute::Home => html! { <Home /> },
         AppRoute::About => html! { <About /> },
-        AppRoute::NotFound => html! { <p class={classes!("container", "prominent")}>{ r"¯\_(ツ)_/¯" }</p> },
+        AppRoute::NotFound => {
+            html! { <p class={classes!("container", "prominent")}>{ r"¯\_(ツ)_/¯" }</p> }
+        }
     }
 }
 
@@ -26,12 +28,12 @@ fn app() -> Html {
     html! {
         <BrowserRouter>
             <Header />
-            <Switch<AppRoute> render={Switch::render(switch)} />
+            <Switch<AppRoute> render={switch} />
             <Footer />
         </BrowserRouter>
     }
 }
 
 fn main() {
-    yew::start_app::<App>();
+    yew::Renderer::<App>::new().render();
 }

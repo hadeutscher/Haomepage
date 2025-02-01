@@ -2,9 +2,8 @@
 name = "haomepage"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+publish = false
 
 [dependencies]
-yew = "0.19"
-yew-router = "0.16"
+yew = { version = "0.21", features = ["csr"] }
+yew-router = "0.18"
