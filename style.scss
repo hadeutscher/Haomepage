@@ -346,20 +346,37 @@ a:hover {
 footer {
     background-color: rgba(255, 255, 255, .075);
     margin-top: 3rem;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
     position: sticky;
     bottom: 0;
     width: 100%;
+    
+    div {
+        display: flex;
+        align-content: center;
+    }
 
     .logo-font {
         vertical-align: middle;
     }
 
     .attribution {
-        vertical-align: middle;
         margin-left: 10px;
         font-size: 0.8rem;
         color: #bbb;
         font-weight: 300;
+        align-content: center;
+    }
+
+    .footer-icons {
+        margin-left: auto;
+    }
+
+    img {
+        filter: grayscale(100%);
+    }
+
+    img:hover {
+        filter: grayscale(0%);
     }
 }
