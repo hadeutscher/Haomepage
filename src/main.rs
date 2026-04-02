@@ -4,36 +4,44 @@ mod header;
 mod home;
 mod routes;
 
-use yew::prelude::*;
-use yew_router::prelude::*;
+use dioxus::prelude::*;
 
-use about::About;
 use footer::Footer;
 use header::Header;
-use home::Home;
 use routes::AppRoute;
 
-fn switch(routes: AppRoute) -> Html {
-    match routes {
-        AppRoute::Home => html! { <Home /> },
-        AppRoute::About => html! { <About /> },
-        AppRoute::NotFound => {
-            html! { <p class={classes!("container", "prominent")}>{ r"¯\_(ツ)_/¯" }</p> }
+const STYLE: Asset = asset!("/assets/style.scss");
+const TACHYONS: Asset = asset!("/assets/tachyons.min.css");
+const HALOGO: Asset = asset!("/assets/HaLogo.svg");
+
+#[component]
+pub fn Layout() -> Element {
+    rsx! {
+        div { class: "main-container",
+            Header {}
+            Outlet::<AppRoute> {}
+            Footer {}
         }
     }
 }
 
-#[function_component(App)]
-fn app() -> Html {
-    html! {
-        <BrowserRouter>
-            <Header />
-            <Switch<AppRoute> render={switch} />
-            <Footer />
-        </BrowserRouter>
+#[component]
+pub fn NotFound(segments: Vec<String>) -> Element {
+    rsx! {
+        p { class: "container prominent", r"¯\_(ツ)_/¯" }
+    }
+}
+
+#[component]
+fn App() -> Element {
+    rsx! {
+        document::Link { rel: "icon", href: HALOGO }
+        document::Stylesheet { href: STYLE }
+        document::Stylesheet { href: TACHYONS }
+        Router::<AppRoute> {}
     }
 }
 
 fn main() {
-    yew::Renderer::<App>::new().render();
+    dioxus::launch(App);
 }

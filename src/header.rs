@@ -1,31 +1,27 @@
-use yew::prelude::*;
-use yew_router::prelude::*;
+use dioxus::prelude::*;
 
 use crate::routes::AppRoute;
 
-fn nav_link(text: &str, route: AppRoute) -> Html {
-    html! {
-        <li class={classes!("nav-item")}>
-                    <Link<AppRoute> to={route} classes={classes!("nav-link")}>
-                        { text }
-                    </Link<AppRoute>>
-        </li>
+#[component]
+fn NavLink(text: String, route: AppRoute) -> Element {
+    rsx! {
+        li { class: "nav-item",
+            Link { to: route, class: "nav-link", "{text}" }
+        }
     }
 }
 
-#[function_component(Header)]
-pub fn header() -> Html {
-    html! {
-        <nav class={classes!("navbar", "navbar-dark")}>
-            <div class={classes!("container")}>
-                <Link<AppRoute> to={AppRoute::Home} classes={classes!("navbar-brand")}>
-                    { "HaDeutscher" }
-                </Link<AppRoute>>
-                <ul class={classes!("nav", "navbar-nav", "pull-xs-right")}>
-                    { nav_link("Home", AppRoute::Home) }
-                    { nav_link("About", AppRoute::About) }
-                </ul>
-            </div>
-        </nav>
+#[component]
+pub fn Header() -> Element {
+    rsx! {
+        nav { class: "navbar navbar-dark",
+            div { class: "container",
+                Link { to: AppRoute::Home {}, class: "navbar-brand", "HaDeutscher" }
+                ul { class: "nav navbar-nav pull-xs-right",
+                    NavLink { text: "Home", route: AppRoute::Home {} }
+                    NavLink { text: "About", route: AppRoute::About {} }
+                }
+            }
+        }
     }
 }

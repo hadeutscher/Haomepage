@@ -1,9 +1,8 @@
 [package]
 name = "haomepage"
 version = "1.0.0"
-edition = "2021"
+edition = "2024"
 publish = false
 
 [dependencies]
-yew = { version = "0.21", features = ["csr"] }
-yew-router = "0.18"
+dioxus = { version = "0.7", features = ["web", "router"] }

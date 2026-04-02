@@ -1,11 +1,13 @@
-use yew::prelude::*;
+use dioxus::prelude::*;
 
-#[function_component(Home)]
-pub fn footer() -> Html {
-    html! {
-        <div class={classes!("container", "prominent")}>
-            <img class={classes!("halogo")} src="HaLogo.svg" />
-            <p>{ "I am leet robot" }</p>
-        </div>
+use crate::HALOGO;
+
+#[component]
+pub fn Home() -> Element {
+    rsx! {
+        div { class: "container prominent",
+            img { class: "halogo", src: HALOGO }
+            p { "I am leet robot" }
+        }
     }
 }
