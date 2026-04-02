@@ -25,22 +25,11 @@ pub fn About() -> Element {
             p {
                 "You can find my code on "
                 a { href: "https://github.com/hadeutscher/", "GitHub" }
-                ", follow me on "
-                a { href: "https://twitter.com/hadeutscher/", "Twitter" }
-                ", or connect with me on "
+                ", connect with me on "
                 a { href: "https://www.linkedin.com/in/hadeutscher/", "LinkedIn" }
-                "."
-                br {}
-                "You can also reach out to me via email at "
+                ", or reach reach out to me via email at "
                 a { href: "mailto:yuval@deut.sh", "yuval@deut.sh" }
                 "."
-            }
-            p {
-                "Here are the links to the projects I'm currently working on: "
-                a { href: "https://harail.deut.sh/", "HaRail" }
-                " ("
-                a { href: "https://github.com/hadeutscher/RustyRail", "GitHub" }
-                ")"
             }
         }
     }

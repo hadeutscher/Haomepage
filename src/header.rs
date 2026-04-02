@@ -20,6 +20,7 @@ pub fn Header() -> Element {
                 ul { class: "nav navbar-nav pull-xs-right",
                     NavLink { text: "Home", route: AppRoute::Home {} }
                     NavLink { text: "About", route: AppRoute::About {} }
+                    NavLink { text: "Contact", route: AppRoute::Contact {} }
                 }
             }
         }

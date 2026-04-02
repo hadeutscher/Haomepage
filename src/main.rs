@@ -1,4 +1,5 @@
 mod about;
+mod contact;
 mod footer;
 mod header;
 mod home;
