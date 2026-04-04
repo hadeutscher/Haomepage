@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::routes::AppRoute;
+use crate::AppRoute;
 
 #[component]
 fn NavLink(text: String, route: AppRoute) -> Element {

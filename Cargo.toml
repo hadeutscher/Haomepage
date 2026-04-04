@@ -6,3 +6,4 @@ publish = false
 
 [dependencies]
 dioxus = { version = "0.7", features = ["web", "router"] }
+dioxus-markdown = { git = "https://github.com/rambip/rust-web-markdown" }

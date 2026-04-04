@@ -1,19 +1,39 @@
-mod about;
-mod contact;
 mod footer;
 mod header;
 mod home;
-mod routes;
 
 use dioxus::prelude::*;
 
+use dioxus_markdown::Markdown;
 use footer::Footer;
 use header::Header;
-use routes::AppRoute;
+use home::Home;
 
 const STYLE: Asset = asset!("/assets/style.scss");
 const TACHYONS: Asset = asset!("/assets/tachyons.min.css");
 const HALOGO: Asset = asset!("/assets/HaLogo.svg");
+
+#[derive(Routable, Clone, PartialEq)]
+pub enum AppRoute {
+    #[layout(crate::Layout)]
+    #[route("/")]
+    Home {},
+    #[route("/about")]
+    About {},
+    #[route("/contact")]
+    Contact {},
+    #[route("/:..segments")]
+    NotFound { segments: Vec<String> },
+}
+
+#[component]
+pub fn MarkdownPage(content: &'static str) -> Element {
+    rsx! {
+        div { class: "container content",
+            Markdown { src: content }
+        }
+    }
+}
 
 #[component]
 pub fn Layout() -> Element {
@@ -23,6 +43,20 @@ pub fn Layout() -> Element {
             Outlet::<AppRoute> {}
             Footer {}
         }
+    }
+}
+
+#[component]
+pub fn About() -> Element {
+    rsx! {
+        MarkdownPage { content: include_str!("../assets/about.md") }
+    }
+}
+
+#[component]
+pub fn Contact() -> Element {
+    rsx! {
+        MarkdownPage { content: include_str!("../assets/contact.md") }
     }
 }
 
