@@ -20,4 +20,4 @@ repos:
     rev: 0.19.0
     hooks:
       - id: cargo-deny
-        args: ["check", "licenses"]
+        args: ["check", "all"]
