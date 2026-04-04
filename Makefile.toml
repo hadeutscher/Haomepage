@@ -1,14 +1,21 @@
 [tasks.dist]
-description = "Build a release bundle into the docs/ directory for GitHub Pages deployment"
+description = "Build a release bundle for GitHub Pages deployment"
 command = "dx"
-args = ["bundle", "--release", "--out-dir", "docs"]
+args = ["bundle", "--release", "--out-dir", "deploy"]
 
-[tasks.copy-404]
-description = "Copy index.html to 404.html for GitHub Pages client-side routing"
+[tasks.move-public]
+description = "Move files out of deploy/public/ to docs/ for GitHub Pages"
 dependencies = ["dist"]
 script_runner = "powershell"
 script_extension = "ps1"
-script = 'cp docs/public/index.html docs/public/404.html'
+script = 'Move-Item deploy\public docs -Force;'
+
+[tasks.copy-404]
+description = "Copy index.html to 404.html for GitHub Pages client-side routing"
+dependencies = ["move-public"]
+script_runner = "powershell"
+script_extension = "ps1"
+script = 'Copy-Item docs/index.html docs/404.html'
 
 [tasks.deploy]
 description = "Full GitHub Pages deployment build"
