@@ -1,22 +1,36 @@
 [tasks.dist]
 description = "Build a release bundle for GitHub Pages deployment"
 command = "dx"
-args = ["bundle", "--release", "--out-dir", "deploy"]
+# Voodoo magic:
+# 1. `dx bundle` doesn't work with --ssg (it supports the flags, but doesn't do
+# anything) so we have to used `dx build`.
+# 2. `dx build --ssg` sometimes overwrites the SSG artifacts with the web client
+# artifacts, so we have to force sequential execution to ensure the SSG artifacts
+# are generated last.
+args = ["build", "--release", "--ssg", "--force-sequential"]
 
 [tasks.move-public]
-description = "Move files out of deploy/public/ to docs/ for GitHub Pages"
+description = "Move files out of build directory to docs/ for GitHub Pages"
 dependencies = ["dist"]
 script_runner = "powershell"
 script_extension = "ps1"
-script = 'Move-Item deploy\public docs -Force;'
+script = '''
+if (Test-Path docs) {
+    Remove-Item docs -Recurse -Force
+}
+Move-Item $env:CARGO_MAKE_CRATE_TARGET_DIRECTORY/dx/$env:CARGO_MAKE_CRATE_NAME/release/web/public docs -Force
+'''
 
-[tasks.copy-404]
-description = "Copy index.html to 404.html for GitHub Pages client-side routing"
+[tasks.fix-404]
+description = "Fix location of 404 page for GitHub Pages client-side routing"
 dependencies = ["move-public"]
 script_runner = "powershell"
 script_extension = "ps1"
-script = 'Copy-Item docs/index.html docs/404.html'
+script = '''
+Move-Item docs/404/index.html docs/404.html -Force
+Remove-Item docs/404 -Recurse -Force
+'''
 
 [tasks.deploy]
 description = "Full GitHub Pages deployment build"
-dependencies = ["copy-404"]
+dependencies = ["fix-404"]
