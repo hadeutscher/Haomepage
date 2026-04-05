@@ -374,3 +374,65 @@ footer {
         filter: grayscale(0%);
     }
 }
+
+html {
+    -webkit-text-size-adjust: 100%;
+    line-height: 1.15;
+}
+
+body {
+    margin: 0;
+}
+
+.f1 {
+    font-size: 3rem;
+}
+
+.f2 {
+    font-size: 2.25rem;
+}
+
+.f3 {
+    font-size: 1.5rem;
+}
+
+.border-box,
+a,
+article,
+aside,
+blockquote,
+body,
+code,
+dd,
+div,
+dl,
+dt,
+fieldset,
+figcaption,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+html,
+legend,
+li,
+main,
+nav,
+ol,
+p,
+pre,
+section,
+table,
+td,
+textarea,
+th,
+tr,
+ul {
+    box-sizing: border-box;
+}

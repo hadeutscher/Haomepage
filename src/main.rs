@@ -10,7 +10,6 @@ use header::Header;
 use home::Home;
 
 const STYLE: Asset = asset!("/assets/style.scss");
-const TACHYONS: Asset = asset!("/assets/tachyons.min.css");
 const HALOGO: Asset = asset!("/assets/HaLogo.svg");
 
 #[derive(Routable, Clone, PartialEq)]
@@ -72,7 +71,6 @@ fn app() -> Element {
     rsx! {
         document::Link { rel: "icon", href: HALOGO }
         document::Stylesheet { href: STYLE }
-        document::Stylesheet { href: TACHYONS }
         Router::<AppRoute> {}
     }
 }
