@@ -7,7 +7,8 @@ command = "dx"
 # 2. `dx build --ssg` sometimes overwrites the SSG artifacts with the web client
 # artifacts, so we have to force sequential execution to ensure the SSG artifacts
 # are generated last.
-args = ["build", "--release", "--ssg", "--force-sequential"]
+# 3. `wasm-opt` fails on aarch64 with debug symbols, so we have to disable them.
+args = ["build", "--release", "--ssg", "--force-sequential", "--debug-symbols=false"]
 
 [tasks.move-public]
 description = "Move files out of build directory to docs/ for GitHub Pages"
