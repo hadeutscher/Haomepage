@@ -1,7 +1,7 @@
 @use "sass:math";
 @use "sass:map";
 
-$border-radius: .25rem !default;
+$border-radius: 0.25rem !default;
 $border-width: 1px !default;
 $spacer: 1.5rem !default;
 $body-bg: #1c1c1c !default;
@@ -22,7 +22,8 @@ $grid-breakpoints: (
     sm: 544px,
     md: 768px,
     lg: 992px,
-    xl: 1200px) !default;
+    xl: 1200px,
+) !default;
 
 // Grid containers
 //
@@ -32,8 +33,8 @@ $container-max-widths: (
     sm: 576px,
     md: 720px,
     lg: 940px,
-    xl: 1140px) !default;
-
+    xl: 1140px,
+) !default;
 
 // Grid columns
 //
@@ -42,22 +43,21 @@ $container-max-widths: (
 $grid-columns: 12 !default;
 $grid-gutter-width: 30px !default;
 
-
 // Navbar
 $navbar-border-radius: $border-radius !default;
 $navbar-padding-x: $spacer !default;
 $navbar-padding-y: math.div($spacer, 2) !default;
-$navbar-brand-padding-y: .25rem !default;
+$navbar-brand-padding-y: 0.25rem !default;
 
-$navbar-dark-color: rgba(255, 255, 255, .5) !default;
-$navbar-dark-hover-color: rgba(255, 255, 255, .75) !default;
+$navbar-dark-color: rgba(255, 255, 255, 0.5) !default;
+$navbar-dark-hover-color: rgba(255, 255, 255, 0.75) !default;
 $navbar-dark-active-color: rgba(255, 255, 255, 1) !default;
-$navbar-dark-disabled-color: rgba(255, 255, 255, .25) !default;
+$navbar-dark-disabled-color: rgba(255, 255, 255, 0.25) !default;
 
-$navbar-light-color: rgba(0, 0, 0, .3) !default;
-$navbar-light-hover-color: rgba(0, 0, 0, .6) !default;
-$navbar-light-active-color: rgba(0, 0, 0, .8) !default;
-$navbar-light-disabled-color: rgba(0, 0, 0, .15) !default;
+$navbar-light-color: rgba(0, 0, 0, 0.3) !default;
+$navbar-light-hover-color: rgba(0, 0, 0, 0.6) !default;
+$navbar-light-active-color: rgba(0, 0, 0, 0.8) !default;
+$navbar-light-disabled-color: rgba(0, 0, 0, 0.15) !default;
 
 // Colors
 $gray-dark: #373a3c !default;
@@ -72,11 +72,10 @@ $brand-info: #5bc0de !default;
 $brand-warning: #f0ad4e !default;
 $brand-danger: #d9534f !default;
 
-
 // Navs
-$nav-item-margin: .2rem !default;
+$nav-item-margin: 0.2rem !default;
 $nav-item-inline-spacer: 1rem !default;
-$nav-link-padding: .5em 1em !default;
+$nav-link-padding: 0.5em 1em !default;
 $nav-link-hover-bg: $gray-lighter !default;
 $nav-disabled-link-color: $gray-light !default;
 $nav-disabled-link-hover-color: $gray-light !default;
@@ -104,30 +103,27 @@ $nav-pills-active-link-bg: $component-active-bg !default;
 }
 
 @mixin hover-focus {
-
     &:focus,
     &:hover {
-        @content
+        @content;
     }
 }
 
 @mixin plain-hover-focus {
-
     &,
     &:focus,
     &:hover {
-        @content
+        @content;
     }
 }
 
 @mixin make-container($gutter: $grid-gutter-width) {
     margin-left: auto;
     margin-right: auto;
-    padding-left: math.div($gutter, 2
-    );
-padding-right: math.div($gutter, 2);
+    padding-left: math.div($gutter, 2);
+    padding-right: math.div($gutter, 2);
 
-@include clearfix();
+    @include clearfix();
 }
 
 // Minimum breakpoint width. Null for the smallest (first) breakpoint.
@@ -158,9 +154,7 @@ padding-right: math.div($gutter, 2);
         @media (min-width: $min) {
             @content;
         }
-    }
-
-    @else {
+    } @else {
         @content;
     }
 }
@@ -174,17 +168,16 @@ padding-right: math.div($gutter, 2);
         @media (max-width: $max) {
             @content;
         }
-    }
-
-    @else {
+    } @else {
         @content;
     }
 }
 
-@mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
-
-    @each $breakpoint,
-    $container-max-width in $max-widths {
+@mixin make-container-max-widths(
+    $max-widths: $container-max-widths,
+    $breakpoints: $grid-breakpoints
+) {
+    @each $breakpoint, $container-max-width in $max-widths {
         @include media-breakpoint-up($breakpoint, $breakpoints) {
             max-width: $container-max-width;
         }
@@ -209,8 +202,8 @@ a:hover {
 
 .main-container {
     min-height: 100vh;
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
 }
 
 .content {
@@ -253,7 +246,6 @@ a:hover {
             border-radius: 0.25rem;
         }
     }
-
 }
 
 .navbar-brand {
@@ -272,21 +264,21 @@ a:hover {
 
     .nav-link {
         display: block;
-        padding-top: .425rem;
-        padding-bottom: .425rem;
+        padding-top: 0.425rem;
+        padding-bottom: 0.425rem;
 
-        +.nav-link {
+        + .nav-link {
             margin-left: 1rem;
         }
     }
 
-    .nav-item+.nav-item {
+    .nav-item + .nav-item {
         margin-left: 1rem;
     }
 }
 
 .navbar-dark {
-    background-color: rgba(255, 255, 255, .075);
+    background-color: rgba(255, 255, 255, 0.075);
 
     .navbar-brand {
         color: $navbar-dark-active-color;
@@ -305,8 +297,8 @@ a:hover {
             }
         }
 
-        .open>.nav-link,
-        .active>.nav-link,
+        .open > .nav-link,
+        .active > .nav-link,
         .nav-link.open,
         .nav-link.active {
             @include plain-hover-focus {
@@ -316,7 +308,7 @@ a:hover {
     }
 
     .navbar-divider {
-        background-color: rgba(255, 255, 255, .075);
+        background-color: rgba(255, 255, 255, 0.075);
     }
 }
 
