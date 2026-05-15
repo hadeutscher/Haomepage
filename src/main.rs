@@ -67,6 +67,7 @@ pub fn Now() -> Element {
         MarkdownPage { content: include_str!("../assets/now.md") }
     }
 }
+
 #[component]
 pub fn NotFound(segments: Vec<String>) -> Element {
     rsx! {
