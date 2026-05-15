@@ -21,6 +21,8 @@ pub enum AppRoute {
     About {},
     #[route("/contact")]
     Contact {},
+    #[route("/now")]
+    Now {},
     #[route("/:..segments")]
     NotFound { segments: Vec<String> },
 }
@@ -59,6 +61,12 @@ pub fn Contact() -> Element {
     }
 }
 
+#[component]
+pub fn Now() -> Element {
+    rsx! {
+        MarkdownPage { content: include_str!("../assets/now.md") }
+    }
+}
 #[component]
 pub fn NotFound(segments: Vec<String>) -> Element {
     rsx! {
